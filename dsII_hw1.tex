@@ -1,0 +1,794 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{fancyhdr}
+\usepackage{lipsum}
+\pagestyle{fancy}
+\fancyhead[R]{\thepage}
+\fancypagestyle{plain}{\pagestyle{fancy}}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Data Science II: HW1},
+  pdfauthor={Shayne Estill},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Data Science II: HW1}
+\author{Shayne Estill}
+\date{}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(caret)}
+\FunctionTok{library}\NormalTok{(tidymodels)}
+\FunctionTok{library}\NormalTok{(kknn)}
+\FunctionTok{library}\NormalTok{(FNN) }\CommentTok{\# knn.reg()}
+\FunctionTok{library}\NormalTok{(doBy) }\CommentTok{\# which.minn()}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(glmnet)}
+\FunctionTok{library}\NormalTok{(ISLR)}
+\FunctionTok{library}\NormalTok{(pls)}
+
+
+
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{2025}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+In this exercise, we predict the sale price of a house based on various
+characteristics. The training data are in ``housing train.csv'', and the
+test data are in ``housing test.csv''. The response is in the column
+``Sale price'', and other variables can be used as predictors. The
+variable definitions can be found in ``dictionary.txt''.
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\tightlist
+\item
+  Fit a lasso model on the training data. Report the selected tuning
+  parameter and the test error. When the 1SE rule is applied, how many
+  predictors are included in the model?
+\end{enumerate}
+
+\#Import the data\#
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{training\_data }\OtherTok{=} \FunctionTok{read\_csv}\NormalTok{(}\AttributeTok{file =} \StringTok{"/Users/shayneestill/Desktop/Data Science II/dsII\_hw1/housing\_training.csv"}\NormalTok{)}
+
+\NormalTok{testing\_data }\OtherTok{=} \FunctionTok{read\_csv}\NormalTok{(}\AttributeTok{file =} \StringTok{"/Users/shayneestill/Desktop/Data Science II/dsII\_hw1/housing\_test.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{training data}\label{training-data}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OtherTok{\textless{}{-}} \FunctionTok{model.matrix}\NormalTok{(Sale\_Price }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., training\_data)[, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{]}
+\NormalTok{y }\OtherTok{\textless{}{-}}\NormalTok{ training\_data}\SpecialCharTok{$}\NormalTok{Sale\_Price}
+\end{Highlighting}
+\end{Shaded}
+
+\section{test data}\label{test-data}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x2 }\OtherTok{\textless{}{-}} \FunctionTok{model.matrix}\NormalTok{(Sale\_Price }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., testing\_data)[, }\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{]}
+\NormalTok{y2 }\OtherTok{\textless{}{-}}\NormalTok{ testing\_data}\SpecialCharTok{$}\NormalTok{Sale\_Price}
+\end{Highlighting}
+\end{Shaded}
+
+Use ``caret'' for lasso
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# K{-}fold CV}
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+
+\NormalTok{search.grid }\OtherTok{\textless{}{-}}\FunctionTok{expand.grid}\NormalTok{(}\AttributeTok{alpha =} \DecValTok{1}\NormalTok{,}
+                          \AttributeTok{lambda =} \FunctionTok{exp}\NormalTok{(}\FunctionTok{seq}\NormalTok{(}\DecValTok{6}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{6}\NormalTok{, }\AttributeTok{length =} \DecValTok{100}\NormalTok{)))}
+
+\NormalTok{ctrl\_5 }\OtherTok{\textless{}{-}} \FunctionTok{trainControl}\NormalTok{(}\AttributeTok{method =} \StringTok{"repeatedcv"}\NormalTok{, }\AttributeTok{repeats =} \DecValTok{5}\NormalTok{, }\AttributeTok{number =} \DecValTok{10}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lasso\_caret.model }\OtherTok{\textless{}{-}} \FunctionTok{train}\NormalTok{(Sale\_Price }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }
+                 \AttributeTok{data =}\NormalTok{ training\_data,}
+                 \AttributeTok{method =} \StringTok{"glmnet"}\NormalTok{, }
+                 \AttributeTok{trControl =}\NormalTok{ ctrl\_5,}
+                 \AttributeTok{tuneGrid =}\NormalTok{ search.grid)}
+
+\FunctionTok{coef}\NormalTok{(lasso\_caret.model}\SpecialCharTok{$}\NormalTok{finalModel, }
+\NormalTok{     lasso\_caret.model}\SpecialCharTok{$}\NormalTok{bestTune}\SpecialCharTok{$}\NormalTok{lambda)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 40 x 1 sparse Matrix of class "dgCMatrix"
+##                                       s1
+## (Intercept)                -4.827229e+06
+## Gr_Liv_Area                 6.538426e+01
+## First_Flr_SF                8.025639e-01
+## Second_Flr_SF               .           
+## Total_Bsmt_SF               3.541790e+01
+## Low_Qual_Fin_SF            -4.093893e+01
+## Wood_Deck_SF                1.163406e+01
+## Open_Porch_SF               1.543115e+01
+## Bsmt_Unf_SF                -2.088742e+01
+## Mas_Vnr_Area                1.090025e+01
+## Garage_Cars                 4.083736e+03
+## Garage_Area                 8.168146e+00
+## Year_Built                  3.233277e+02
+## TotRms_AbvGrd              -3.616290e+03
+## Full_Bath                  -3.840140e+03
+## Overall_QualAverage        -4.853059e+03
+## Overall_QualBelow_Average  -1.245648e+04
+## Overall_QualExcellent       7.549879e+04
+## Overall_QualFair           -1.075093e+04
+## Overall_QualGood            1.212071e+04
+## Overall_QualVery_Excellent  1.357075e+05
+## Overall_QualVery_Good       3.789087e+04
+## Kitchen_QualFair           -2.483806e+04
+## Kitchen_QualGood           -1.720012e+04
+## Kitchen_QualTypical        -2.531083e+04
+## Fireplaces                  1.054387e+04
+## Fireplace_QuFair           -7.665787e+03
+## Fireplace_QuGood            .           
+## Fireplace_QuNo_Fireplace    1.438181e+03
+## Fireplace_QuPoor           -5.640226e+03
+## Fireplace_QuTypical        -7.011019e+03
+## Exter_QualFair             -3.332982e+04
+## Exter_QualGood             -1.508538e+04
+## Exter_QualTypical          -1.952240e+04
+## Lot_Frontage                9.963955e+01
+## Lot_Area                    6.042538e-01
+## Longitude                  -3.293051e+04
+## Latitude                    5.507513e+04
+## Misc_Val                    8.278839e-01
+## Year_Sold                  -5.601503e+02
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lasso\_caret.model}\SpecialCharTok{$}\NormalTok{bestTune}\SpecialCharTok{$}\NormalTok{lambda}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 65.48481
+\end{verbatim}
+
+Best tuning parameter is lambda 65.48481
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pred\_caretlasso }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(lasso\_caret.model, testing\_data)}
+\NormalTok{test\_error\_caret }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{mean}\NormalTok{((pred\_caretlasso }\SpecialCharTok{{-}}\NormalTok{ testing\_data}\SpecialCharTok{$}\NormalTok{Sale\_Price)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}
+
+\NormalTok{test\_error\_caret}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 20975.41
+\end{verbatim}
+
+The test error is 20975.41
+
+When the 1SE rule is applied, how many predictors are included in the
+model?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ctrl\_1se }\OtherTok{\textless{}{-}} \FunctionTok{trainControl}\NormalTok{(}
+  \AttributeTok{method =} \StringTok{"cv"}\NormalTok{,}
+  \AttributeTok{selectionFunction =} \StringTok{"oneSE"}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lasso\_1se }\OtherTok{\textless{}{-}} \FunctionTok{train}\NormalTok{(}
+\NormalTok{  Sale\_Price }\SpecialCharTok{\textasciitilde{}}\NormalTok{ .,}
+  \AttributeTok{data =}\NormalTok{ training\_data,}
+  \AttributeTok{method =} \StringTok{"glmnet"}\NormalTok{,}
+  \AttributeTok{tuneGrid =} \FunctionTok{expand.grid}\NormalTok{(}
+    \AttributeTok{alpha =} \DecValTok{1}\NormalTok{,}
+    \AttributeTok{lambda =} \FunctionTok{exp}\NormalTok{(}\FunctionTok{seq}\NormalTok{(}\DecValTok{6}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{6}\NormalTok{, }\AttributeTok{length =} \DecValTok{100}\NormalTok{))  }
+\NormalTok{  ),}
+  \AttributeTok{trControl =}\NormalTok{ ctrl\_1se}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lasso\_lambda1se }\OtherTok{\textless{}{-}}\NormalTok{ lasso\_1se}\SpecialCharTok{$}\NormalTok{bestTune}\SpecialCharTok{$}\NormalTok{lambda}
+\NormalTok{lasso\_lambda1se}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 403.4288
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{coef}\NormalTok{(lasso\_1se}\SpecialCharTok{$}\NormalTok{finalModel, lasso\_lambda1se)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 40 x 1 sparse Matrix of class "dgCMatrix"
+##                                       s1
+## (Intercept)                -3.919159e+06
+## Gr_Liv_Area                 6.099153e+01
+## First_Flr_SF                9.477449e-01
+## Second_Flr_SF               .           
+## Total_Bsmt_SF               3.627699e+01
+## Low_Qual_Fin_SF            -3.523480e+01
+## Wood_Deck_SF                1.000632e+01
+## Open_Porch_SF               1.203918e+01
+## Bsmt_Unf_SF                -2.059528e+01
+## Mas_Vnr_Area                1.297320e+01
+## Garage_Cars                 3.491107e+03
+## Garage_Area                 9.740129e+00
+## Year_Built                  3.150805e+02
+## TotRms_AbvGrd              -2.518326e+03
+## Full_Bath                  -1.415647e+03
+## Overall_QualAverage        -4.006722e+03
+## Overall_QualBelow_Average  -1.084480e+04
+## Overall_QualExcellent       8.719850e+04
+## Overall_QualFair           -8.763236e+03
+## Overall_QualGood            1.111389e+04
+## Overall_QualVery_Excellent  1.559964e+05
+## Overall_QualVery_Good       3.730815e+04
+## Kitchen_QualFair           -1.420320e+04
+## Kitchen_QualGood           -7.639239e+03
+## Kitchen_QualTypical        -1.644274e+04
+## Fireplaces                  8.190689e+03
+## Fireplace_QuFair           -3.809974e+03
+## Fireplace_QuGood            2.196176e+03
+## Fireplace_QuNo_Fireplace    .           
+## Fireplace_QuPoor           -1.484163e+03
+## Fireplace_QuTypical        -4.125304e+03
+## Exter_QualFair             -1.695505e+04
+## Exter_QualGood              .           
+## Exter_QualTypical          -4.790664e+03
+## Lot_Frontage                8.663344e+01
+## Lot_Area                    5.915806e-01
+## Longitude                  -2.246220e+04
+## Latitude                    3.767830e+04
+## Misc_Val                    3.093854e-01
+## Year_Sold                  -1.654627e+02
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pred\_lasso\_1SE }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(lasso\_1se, }\AttributeTok{newdata =}\NormalTok{ testing\_data)  }
+
+\NormalTok{lasso\_1SErmse }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{mean}\NormalTok{((pred\_lasso\_1SE }\SpecialCharTok{{-}}\NormalTok{ testing\_data}\SpecialCharTok{$}\NormalTok{Sale\_Price)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}
+
+\NormalTok{lasso\_1SErmse}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 20511.62
+\end{verbatim}
+
+The lasso lambda 1se is 403.4288 and the lasso 1se test error is
+20511.62 and the number of predictors is 40-1-3 = 36.
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\setcounter{enumi}{1}
+\tightlist
+\item
+  Fit an elastic net model on the training data. Report the selected
+  tuning parameters and the test error. Is it possible to apply the 1SE
+  rule to select the tuning parameters for elastic net? If the 1SE rule
+  is applicable, implement it to select the tuning parameters. If not,
+  explain why.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ctrl1 }\OtherTok{\textless{}{-}} \FunctionTok{trainControl}\NormalTok{(}\AttributeTok{method =} \StringTok{"repeatedcv"}\NormalTok{,}
+\AttributeTok{number =} \DecValTok{10}\NormalTok{,}
+\AttributeTok{repeats =} \DecValTok{5}\NormalTok{,}
+\AttributeTok{selectionFunction =} \StringTok{"oneSE"}\NormalTok{) }\CommentTok{\# "oneSE" for the 1SE rule}
+\CommentTok{\# show information about the model}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{2}\NormalTok{)}
+\NormalTok{enet\_fit }\OtherTok{\textless{}{-}} \FunctionTok{train}\NormalTok{(Sale\_Price }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ., }\AttributeTok{data =}\NormalTok{ training\_data,}
+                  \AttributeTok{method =} \StringTok{"glmnet"}\NormalTok{, }\AttributeTok{tuneGrid =} \FunctionTok{expand.grid}\NormalTok{(}\AttributeTok{alpha =} \FunctionTok{seq}\NormalTok{(}\DecValTok{0}\NormalTok{, }\DecValTok{1}\NormalTok{, }\AttributeTok{length =} \DecValTok{11}\NormalTok{),}
+\AttributeTok{lambda =} \FunctionTok{exp}\NormalTok{(}\FunctionTok{seq}\NormalTok{(}\DecValTok{6}\NormalTok{, }\DecValTok{0}\NormalTok{, }\AttributeTok{length =} \DecValTok{50}\NormalTok{))),}
+\AttributeTok{trControl =}\NormalTok{ ctrl1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(enet\_fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{dsII_hw1_files/figure-latex/unnamed-chunk-13-1.pdf}
+
+It is possible to apply the 1SE rule to select the tuning parameters for
+elastic net. I applied it using ``selectionFunction =''oneSE''
+
+The lambda is 403.4288 with alpha = 0.
+
+getting an alpha of 0 is technically a ridge regression, however when we
+plot the elastic net, we see a positive curve up which indicates it is
+okay to use oneSE.
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\setcounter{enumi}{2}
+\tightlist
+\item
+  Fit a partial least squares model on the training data and report the
+  test error. How many components are included in your model?
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{3}\NormalTok{)}
+\NormalTok{pls\_mod }\OtherTok{\textless{}{-}} \FunctionTok{plsr}\NormalTok{(Sale\_Price }\SpecialCharTok{\textasciitilde{}}\NormalTok{ .,}\AttributeTok{data =}\NormalTok{ training\_data, }\AttributeTok{scale =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{validation =} \StringTok{"CV"}\NormalTok{)}
+\FunctionTok{summary}\NormalTok{(pls\_mod)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Data:    X dimension: 1440 39 
+##  Y dimension: 1440 1
+## Fit method: kernelpls
+## Number of components considered: 39
+## 
+## VALIDATION: RMSEP
+## Cross-validated using 10 random segments.
+##        (Intercept)  1 comps  2 comps  3 comps  4 comps  5 comps  6 comps
+## CV           73685    33417    27996    25208    24051    23421    23226
+## adjCV        73685    33409    27957    25130    23979    23351    23165
+##        7 comps  8 comps  9 comps  10 comps  11 comps  12 comps  13 comps
+## CV       23097    23079    23116     23094     23080     23084     23085
+## adjCV    23041    23022    23054     23032     23018     23021     23022
+##        14 comps  15 comps  16 comps  17 comps  18 comps  19 comps  20 comps
+## CV        23094     23090     23105     23095     23106     23109     23113
+## adjCV     23030     23027     23040     23031     23041     23044     23048
+##        21 comps  22 comps  23 comps  24 comps  25 comps  26 comps  27 comps
+## CV        23115     23119     23118     23118     23119     23119     23121
+## adjCV     23049     23053     23052     23052     23053     23053     23055
+##        28 comps  29 comps  30 comps  31 comps  32 comps  33 comps  34 comps
+## CV        23122     23122     23122     23122     23122     23122     23122
+## adjCV     23056     23056     23056     23056     23056     23056     23056
+##        35 comps  36 comps  37 comps  38 comps  39 comps
+## CV        23122     23122     23122     23122     23979
+## adjCV     23056     23056     23056     23056     23518
+## 
+## TRAINING: % variance explained
+##             1 comps  2 comps  3 comps  4 comps  5 comps  6 comps  7 comps
+## X             20.02    25.93    29.67    33.59    37.01    40.03    42.49
+## Sale_Price    79.73    86.35    89.36    90.37    90.87    90.99    91.06
+##             8 comps  9 comps  10 comps  11 comps  12 comps  13 comps  14 comps
+## X             45.53    47.97     50.15     52.01     53.69     55.35     56.86
+## Sale_Price    91.08    91.10     91.13     91.15     91.15     91.16     91.16
+##             15 comps  16 comps  17 comps  18 comps  19 comps  20 comps
+## X              58.64     60.01     62.18     63.87     65.26     67.10
+## Sale_Price     91.16     91.16     91.16     91.16     91.16     91.16
+##             21 comps  22 comps  23 comps  24 comps  25 comps  26 comps
+## X              68.44     70.12     71.72     73.35     75.20     77.27
+## Sale_Price     91.16     91.16     91.16     91.16     91.16     91.16
+##             27 comps  28 comps  29 comps  30 comps  31 comps  32 comps
+## X              78.97     80.10     81.83     83.55     84.39     86.34
+## Sale_Price     91.16     91.16     91.16     91.16     91.16     91.16
+##             33 comps  34 comps  35 comps  36 comps  37 comps  38 comps
+## X              88.63     90.79     92.79     95.45     97.49    100.00
+## Sale_Price     91.16     91.16     91.16     91.16     91.16     91.16
+##             39 comps
+## X             100.24
+## Sale_Price     91.14
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# plot cross{-}validated MSEP for PLS}
+\FunctionTok{validationplot}\NormalTok{(pls\_mod, }\AttributeTok{val.type =} \StringTok{"MSEP"}\NormalTok{, }\AttributeTok{legendpos =} \StringTok{"topright"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{dsII_hw1_files/figure-latex/unnamed-chunk-15-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# determine the optimal number of components}
+\NormalTok{cv\_mse }\OtherTok{\textless{}{-}} \FunctionTok{RMSEP}\NormalTok{(pls\_mod)}
+\NormalTok{ncomp\_cv }\OtherTok{\textless{}{-}} \FunctionTok{which.min}\NormalTok{(cv\_mse}\SpecialCharTok{$}\NormalTok{val[}\DecValTok{1}\NormalTok{,,]) }\SpecialCharTok{{-}} \DecValTok{1}
+\NormalTok{ncomp\_cv}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 8 comps 
+##       8
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# calculate test MSE}
+\NormalTok{predy2\_pls }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(pls\_mod, }\AttributeTok{newdata =}\NormalTok{ testing\_data,}
+\AttributeTok{ncomp =}\NormalTok{ ncomp\_cv)}
+\FunctionTok{mean}\NormalTok{((y2 }\SpecialCharTok{{-}}\NormalTok{ predy2\_pls)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 440217938
+\end{verbatim}
+
+8 components included in the model and a testing error of 440217938.
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\setcounter{enumi}{3}
+\tightlist
+\item
+  Choose the best model for predicting the response and explain your
+  choice.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# compare lasso, elastic net, and PLS models}
+\CommentTok{\#resamp \textless{}{-} resamples(list(lasso = lasso\_1se, elastic\_net = enet\_fit,}
+  \CommentTok{\#                  pls = pls\_mod))}
+
+\CommentTok{\#summary(resamp)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(lasso\_1se)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             Length Class      Mode     
+## a0            79   -none-     numeric  
+## beta        3081   dgCMatrix  S4       
+## df            79   -none-     numeric  
+## dim            2   -none-     numeric  
+## lambda        79   -none-     numeric  
+## dev.ratio     79   -none-     numeric  
+## nulldev        1   -none-     numeric  
+## npasses        1   -none-     numeric  
+## jerr           1   -none-     numeric  
+## offset         1   -none-     logical  
+## call           5   -none-     call     
+## nobs           1   -none-     numeric  
+## lambdaOpt      1   -none-     numeric  
+## xNames        39   -none-     character
+## problemType    1   -none-     character
+## tuneValue      2   data.frame list     
+## obsLevels      1   -none-     logical  
+## param          0   -none-     list
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(enet\_fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             Length Class      Mode     
+## a0           100   -none-     numeric  
+## beta        3900   dgCMatrix  S4       
+## df           100   -none-     numeric  
+## dim            2   -none-     numeric  
+## lambda       100   -none-     numeric  
+## dev.ratio    100   -none-     numeric  
+## nulldev        1   -none-     numeric  
+## npasses        1   -none-     numeric  
+## jerr           1   -none-     numeric  
+## offset         1   -none-     logical  
+## call           5   -none-     call     
+## nobs           1   -none-     numeric  
+## lambdaOpt      1   -none-     numeric  
+## xNames        39   -none-     character
+## problemType    1   -none-     character
+## tuneValue      2   data.frame list     
+## obsLevels      1   -none-     logical  
+## param          0   -none-     list
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(pls\_mod)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Data:    X dimension: 1440 39 
+##  Y dimension: 1440 1
+## Fit method: kernelpls
+## Number of components considered: 39
+## 
+## VALIDATION: RMSEP
+## Cross-validated using 10 random segments.
+##        (Intercept)  1 comps  2 comps  3 comps  4 comps  5 comps  6 comps
+## CV           73685    33417    27996    25208    24051    23421    23226
+## adjCV        73685    33409    27957    25130    23979    23351    23165
+##        7 comps  8 comps  9 comps  10 comps  11 comps  12 comps  13 comps
+## CV       23097    23079    23116     23094     23080     23084     23085
+## adjCV    23041    23022    23054     23032     23018     23021     23022
+##        14 comps  15 comps  16 comps  17 comps  18 comps  19 comps  20 comps
+## CV        23094     23090     23105     23095     23106     23109     23113
+## adjCV     23030     23027     23040     23031     23041     23044     23048
+##        21 comps  22 comps  23 comps  24 comps  25 comps  26 comps  27 comps
+## CV        23115     23119     23118     23118     23119     23119     23121
+## adjCV     23049     23053     23052     23052     23053     23053     23055
+##        28 comps  29 comps  30 comps  31 comps  32 comps  33 comps  34 comps
+## CV        23122     23122     23122     23122     23122     23122     23122
+## adjCV     23056     23056     23056     23056     23056     23056     23056
+##        35 comps  36 comps  37 comps  38 comps  39 comps
+## CV        23122     23122     23122     23122     23979
+## adjCV     23056     23056     23056     23056     23518
+## 
+## TRAINING: % variance explained
+##             1 comps  2 comps  3 comps  4 comps  5 comps  6 comps  7 comps
+## X             20.02    25.93    29.67    33.59    37.01    40.03    42.49
+## Sale_Price    79.73    86.35    89.36    90.37    90.87    90.99    91.06
+##             8 comps  9 comps  10 comps  11 comps  12 comps  13 comps  14 comps
+## X             45.53    47.97     50.15     52.01     53.69     55.35     56.86
+## Sale_Price    91.08    91.10     91.13     91.15     91.15     91.16     91.16
+##             15 comps  16 comps  17 comps  18 comps  19 comps  20 comps
+## X              58.64     60.01     62.18     63.87     65.26     67.10
+## Sale_Price     91.16     91.16     91.16     91.16     91.16     91.16
+##             21 comps  22 comps  23 comps  24 comps  25 comps  26 comps
+## X              68.44     70.12     71.72     73.35     75.20     77.27
+## Sale_Price     91.16     91.16     91.16     91.16     91.16     91.16
+##             27 comps  28 comps  29 comps  30 comps  31 comps  32 comps
+## X              78.97     80.10     81.83     83.55     84.39     86.34
+## Sale_Price     91.16     91.16     91.16     91.16     91.16     91.16
+##             33 comps  34 comps  35 comps  36 comps  37 comps  38 comps
+## X              88.63     90.79     92.79     95.45     97.49    100.00
+## Sale_Price     91.16     91.16     91.16     91.16     91.16     91.16
+##             39 comps
+## X             100.24
+## Sale_Price     91.14
+\end{verbatim}
+
+Unable to identify best model with this code.
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\setcounter{enumi}{4}
+\tightlist
+\item
+  If R package ``caret'' was used for the lasso in (a), retrain this
+  model using R package ``glmnet'', and vice versa. Compare the selected
+  tuning parameters between the two software approaches. Should there be
+  discrepancies in the chosen parameters, discuss potential reasons for
+  these differences.
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{5}\NormalTok{)}
+\NormalTok{cv.lambda.lasso }\OtherTok{\textless{}{-}} \FunctionTok{cv.glmnet}\NormalTok{(}\AttributeTok{x=}\NormalTok{x, }\AttributeTok{y=}\NormalTok{y, }
+                         \AttributeTok{alpha =} \DecValTok{1}\NormalTok{) }
+\FunctionTok{plot}\NormalTok{(cv.lambda.lasso)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{dsII_hw1_files/figure-latex/unnamed-chunk-20-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{cv.lambda.lasso}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:  cv.glmnet(x = x, y = y, alpha = 1) 
+## 
+## Measure: Mean-Squared Error 
+## 
+##     Lambda Index   Measure       SE Nonzero
+## min   38.5    79 522639532 15659568      37
+## 1se  394.2    54 537780170 18724012      36
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(cv.lambda.lasso}\SpecialCharTok{$}\NormalTok{glmnet.fit, }
+     \StringTok{"lambda"}\NormalTok{, }\AttributeTok{label=}\ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{dsII_hw1_files/figure-latex/unnamed-chunk-20-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{l.lasso.min }\OtherTok{\textless{}{-}}\NormalTok{ cv.lambda.lasso}\SpecialCharTok{$}\NormalTok{lambda.min}
+\NormalTok{lasso.model }\OtherTok{\textless{}{-}} \FunctionTok{glmnet}\NormalTok{(}\AttributeTok{x=}\NormalTok{x, }\AttributeTok{y=}\NormalTok{y,}
+                      \AttributeTok{alpha  =} \DecValTok{1}\NormalTok{, }
+                      \AttributeTok{lambda =}\NormalTok{ l.lasso.min)}
+\NormalTok{lasso.model}\SpecialCharTok{$}\NormalTok{beta    }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 39 x 1 sparse Matrix of class "dgCMatrix"
+##                                       s0
+## Gr_Liv_Area                 6.573832e+01
+## First_Flr_SF                7.763467e-01
+## Second_Flr_SF               .           
+## Total_Bsmt_SF               3.531049e+01
+## Low_Qual_Fin_SF            -4.143765e+01
+## Wood_Deck_SF                1.181350e+01
+## Open_Porch_SF               1.576060e+01
+## Bsmt_Unf_SF                -2.086815e+01
+## Mas_Vnr_Area                1.074075e+01
+## Garage_Cars                 4.145020e+03
+## Garage_Area                 8.011003e+00
+## Year_Built                  3.238967e+02
+## TotRms_AbvGrd              -3.699372e+03
+## Full_Bath                  -4.039088e+03
+## Overall_QualAverage        -4.919328e+03
+## Overall_QualBelow_Average  -1.259901e+04
+## Overall_QualExcellent       7.428657e+04
+## Overall_QualFair           -1.093449e+04
+## Overall_QualGood            1.217053e+04
+## Overall_QualVery_Excellent  1.337016e+05
+## Overall_QualVery_Good       3.790975e+04
+## Kitchen_QualFair           -2.592753e+04
+## Kitchen_QualGood           -1.819803e+04
+## Kitchen_QualTypical        -2.624123e+04
+## Fireplaces                  1.097388e+04
+## Fireplace_QuFair           -7.319868e+03
+## Fireplace_QuGood            3.680496e+02
+## Fireplace_QuNo_Fireplace    2.468884e+03
+## Fireplace_QuPoor           -5.309470e+03
+## Fireplace_QuTypical        -6.631584e+03
+## Exter_QualFair             -3.498990e+04
+## Exter_QualGood             -1.659107e+04
+## Exter_QualTypical          -2.105181e+04
+## Lot_Frontage                1.008084e+02
+## Lot_Area                    6.041383e-01
+## Longitude                  -3.376420e+04
+## Latitude                    5.653535e+04
+## Misc_Val                    8.679172e-01
+## Year_Sold                  -5.938265e+02
+\end{verbatim}
+
+The selected tuning parameter is 55.9 and the test error is 41242386
+with 37 predictors.
+
+When the 1SE rule is applied, 29 predictors are included in the model.
+
+The parameters are different between caret and glmnet packages are
+different, because of regularization. Parameter traincontrol is
+different between them.
+
+References: \url{https://www.statology.org/lasso-regression-in-r/}
+\url{https://bookdown.org/tpinto_home/Regularisation/lasso-regression.html}
+
+\end{document}
