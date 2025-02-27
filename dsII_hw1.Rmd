@@ -1,0 +1,272 @@
+---
+title: "Data Science II: HW1" 
+author: "Shayne Estill"
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: 2
+  html_document:
+    df_print: paged
+    toc: yes
+    toc_depth: '2'
+header-includes:
+- \usepackage{fancyhdr}
+- \usepackage{lipsum}
+- \pagestyle{fancy}
+- \fancyhead[R]{\thepage}
+- \fancypagestyle{plain}{\pagestyle{fancy}}
+--- 
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+```{r}
+library(caret)
+library(tidymodels)
+library(kknn)
+library(FNN) # knn.reg()
+library(doBy) # which.minn()
+library(tidyverse)
+library(glmnet)
+library(ISLR)
+library(pls)
+
+
+
+set.seed(2025)
+```
+
+In this exercise, we predict the sale price of a house based on various characteristics. The
+training data are in “housing train.csv”, and the test data are in “housing test.csv”. The
+response is in the column “Sale price”, and other variables can be used as predictors. The
+variable definitions can be found in “dictionary.txt”.
+
+(a) Fit a lasso model on the training data. Report the selected tuning parameter and
+the test error. When the 1SE rule is applied, how many predictors are included in
+the model?
+
+
+#Import the data# 
+```{r}
+training_data = read_csv(file = "/Users/shayneestill/Desktop/Data Science II/dsII_hw1/housing_training.csv")
+
+testing_data = read_csv(file = "/Users/shayneestill/Desktop/Data Science II/dsII_hw1/housing_test.csv")
+```
+
+# training data#
+```{r}
+x <- model.matrix(Sale_Price ~ ., training_data)[, -1]
+y <- training_data$Sale_Price
+```
+
+# test data#
+```{r}
+x2 <- model.matrix(Sale_Price ~ ., testing_data)[, -1]
+y2 <- testing_data$Sale_Price
+```
+
+
+Use "caret" for lasso
+```{r}
+# K-fold CV
+set.seed(1)
+
+search.grid <-expand.grid(alpha = 1,
+                          lambda = exp(seq(6, -6, length = 100)))
+
+ctrl_5 <- trainControl(method = "repeatedcv", repeats = 5, number = 10)
+```
+
+```{r}
+lasso_caret.model <- train(Sale_Price ~ ., 
+                 data = training_data,
+                 method = "glmnet", 
+                 trControl = ctrl_5,
+                 tuneGrid = search.grid)
+
+coef(lasso_caret.model$finalModel, 
+     lasso_caret.model$bestTune$lambda)
+
+lasso_caret.model$bestTune$lambda
+```
+
+Best tuning parameter is lambda 65.48481
+
+```{r}
+pred_caretlasso <- predict(lasso_caret.model, testing_data)
+test_error_caret <- sqrt(mean((pred_caretlasso - testing_data$Sale_Price)^2))
+
+test_error_caret
+```
+
+The test error is 20975.41
+
+When the 1SE rule is applied, how many predictors are included in
+the model?
+
+```{r}
+ctrl_1se <- trainControl(
+  method = "cv",
+  selectionFunction = "oneSE") 
+```
+
+```{r}
+lasso_1se <- train(
+  Sale_Price ~ .,
+  data = training_data,
+  method = "glmnet",
+  tuneGrid = expand.grid(
+    alpha = 1,
+    lambda = exp(seq(6, -6, length = 100))  
+  ),
+  trControl = ctrl_1se
+)
+```
+
+```{r}
+lasso_lambda1se <- lasso_1se$bestTune$lambda
+lasso_lambda1se
+
+coef(lasso_1se$finalModel, lasso_lambda1se)
+
+pred_lasso_1SE <- predict(lasso_1se, newdata = testing_data)  
+
+lasso_1SErmse <- sqrt(mean((pred_lasso_1SE - testing_data$Sale_Price)^2))
+
+lasso_1SErmse
+```
+
+The lasso lambda 1se is 403.4288 and the lasso 1se test error is 20511.62
+and the number of predictors is 40-1-3 = 36. 
+
+(b) Fit an elastic net model on the training data. Report the selected tuning parameters
+and the test error. Is it possible to apply the 1SE rule to select the tuning parameters for elastic net? If the 1SE rule is applicable, implement it to select the tuning
+parameters. If not, explain why.
+
+```{r}
+ctrl1 <- trainControl(method = "repeatedcv",
+number = 10,
+repeats = 5,
+selectionFunction = "oneSE") # "oneSE" for the 1SE rule
+# show information about the model
+
+```
+
+```{r}
+set.seed(2)
+enet_fit <- train(Sale_Price ~ ., data = training_data,
+                  method = "glmnet", tuneGrid = expand.grid(alpha = seq(0, 1, length = 11),
+lambda = exp(seq(6, 0, length = 50))),
+trControl = ctrl1)
+```
+
+```{r}
+plot(enet_fit)
+```
+
+
+
+It is possible to apply the 1SE rule to select the tuning parameters for elastic
+net. I applied it using "selectionFunction = "oneSE"
+
+The lambda is 403.4288 with alpha = 0. 
+
+getting an alpha of 0 is technically a ridge regression, however when we
+plot the elastic net, we see a positive curve up which indicates 
+it is okay to use oneSE.
+
+
+
+
+
+(c) Fit a partial least squares model on the training data and report the test error. How
+many components are included in your model?
+
+```{r}
+set.seed(3)
+pls_mod <- plsr(Sale_Price ~ .,data = training_data, scale = TRUE, validation = "CV")
+summary(pls_mod)
+```
+
+```{r}
+# plot cross-validated MSEP for PLS
+validationplot(pls_mod, val.type = "MSEP", legendpos = "topright")
+```
+
+```{r}
+# determine the optimal number of components
+cv_mse <- RMSEP(pls_mod)
+ncomp_cv <- which.min(cv_mse$val[1,,]) - 1
+ncomp_cv
+```
+
+```{r}
+# calculate test MSE
+predy2_pls <- predict(pls_mod, newdata = testing_data,
+ncomp = ncomp_cv)
+mean((y2 - predy2_pls)^2)
+```
+
+8 components included in the model and a testing error of 440217938. 
+
+
+
+
+
+(d) Choose the best model for predicting the response and explain your choice.
+
+```{r}
+# compare lasso, elastic net, and PLS models
+#resamp <- resamples(list(lasso = lasso_1se, elastic_net = enet_fit,
+  #                  pls = pls_mod))
+
+#summary(resamp)
+```
+
+```{r}
+summary(lasso_1se)
+summary(enet_fit)
+summary(pls_mod)
+```
+
+Unable to identify best model with this code. 
+
+
+(e) If R package “caret” was used for the lasso in (a), retrain this model using R package
+“glmnet”, and vice versa. Compare the selected tuning parameters between the two
+software approaches. Should there be discrepancies in the chosen parameters, discuss
+potential reasons for these differences.
+
+
+```{r}
+set.seed(5)
+cv.lambda.lasso <- cv.glmnet(x=x, y=y, 
+                         alpha = 1) 
+plot(cv.lambda.lasso)
+  
+cv.lambda.lasso
+
+plot(cv.lambda.lasso$glmnet.fit, 
+     "lambda", label=FALSE)
+```
+
+```{r}
+l.lasso.min <- cv.lambda.lasso$lambda.min
+lasso.model <- glmnet(x=x, y=y,
+                      alpha  = 1, 
+                      lambda = l.lasso.min)
+lasso.model$beta    
+```
+
+
+The selected tuning parameter is 55.9 and the test error is 41242386 with 37 predictors.
+
+When the 1SE rule is applied, 29 predictors are included in
+the model. 
+
+The parameters are different between caret and glmnet packages are different, because of regularization. Parameter traincontrol is different between them.  
+
+References:
+https://www.statology.org/lasso-regression-in-r/ 
+https://bookdown.org/tpinto_home/Regularisation/lasso-regression.html
